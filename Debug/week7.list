@@ -27,23 +27,23 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   ALLOC
  11 .ARM.attributes 00000030  00000000  00000000  0002000c  2**0
                   CONTENTS, READONLY
- 12 .debug_info   00009ce0  00000000  00000000  0002003c  2**0
+ 12 .debug_info   00009ce2  00000000  00000000  0002003c  2**0
                   CONTENTS, READONLY, DEBUGGING
- 13 .debug_abbrev 000016bb  00000000  00000000  00029d1c  2**0
+ 13 .debug_abbrev 000016bb  00000000  00000000  00029d1e  2**0
                   CONTENTS, READONLY, DEBUGGING
- 14 .debug_aranges 00000b30  00000000  00000000  0002b3d8  2**3
+ 14 .debug_aranges 00000b30  00000000  00000000  0002b3e0  2**3
                   CONTENTS, READONLY, DEBUGGING
- 15 .debug_ranges 00000a78  00000000  00000000  0002bf08  2**3
+ 15 .debug_ranges 00000a78  00000000  00000000  0002bf10  2**3
                   CONTENTS, READONLY, DEBUGGING
- 16 .debug_macro  00015460  00000000  00000000  0002c980  2**0
+ 16 .debug_macro  00015460  00000000  00000000  0002c988  2**0
                   CONTENTS, READONLY, DEBUGGING
- 17 .debug_line   00007756  00000000  00000000  00041de0  2**0
+ 17 .debug_line   00007756  00000000  00000000  00041de8  2**0
                   CONTENTS, READONLY, DEBUGGING
- 18 .debug_str    0008893e  00000000  00000000  00049536  2**0
+ 18 .debug_str    0008893e  00000000  00000000  0004953e  2**0
                   CONTENTS, READONLY, DEBUGGING
- 19 .comment      0000007b  00000000  00000000  000d1e74  2**0
+ 19 .comment      0000007b  00000000  00000000  000d1e7c  2**0
                   CONTENTS, READONLY
- 20 .debug_frame  0000309c  00000000  00000000  000d1ef0  2**2
+ 20 .debug_frame  0000309c  00000000  00000000  000d1ef8  2**2
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -1264,356 +1264,353 @@ int main(void)
  8000f52:	f000 fabd 	bl	80014d0 <MX_TIM3_Init>
   /* USER CODE BEGIN 2 */
 	HAL_TIM_Base_Start_IT(&htim2);
- 8000f56:	48c3      	ldr	r0, [pc, #780]	; (8001264 <main+0x334>)
+ 8000f56:	48c5      	ldr	r0, [pc, #788]	; (800126c <main+0x33c>)
  8000f58:	f001 fddd 	bl	8002b16 <HAL_TIM_Base_Start_IT>
 	HAL_TIM_Encoder_Start(&htim1, TIM_CHANNEL_ALL);
  8000f5c:	213c      	movs	r1, #60	; 0x3c
- 8000f5e:	48c2      	ldr	r0, [pc, #776]	; (8001268 <main+0x338>)
+ 8000f5e:	48c4      	ldr	r0, [pc, #784]	; (8001270 <main+0x340>)
  8000f60:	f001 fef6 	bl	8002d50 <HAL_TIM_Encoder_Start>
 
 	// start TIM
 	HAL_TIM_Base_Start(&htim3);
- 8000f64:	48c1      	ldr	r0, [pc, #772]	; (800126c <main+0x33c>)
+ 8000f64:	48c3      	ldr	r0, [pc, #780]	; (8001274 <main+0x344>)
  8000f66:	f001 fdb2 	bl	8002ace <HAL_TIM_Base_Start>
 	HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_1);
  8000f6a:	2100      	movs	r1, #0
- 8000f6c:	48bf      	ldr	r0, [pc, #764]	; (800126c <main+0x33c>)
+ 8000f6c:	48c1      	ldr	r0, [pc, #772]	; (8001274 <main+0x344>)
  8000f6e:	f001 fe2b 	bl	8002bc8 <HAL_TIM_PWM_Start>
 	HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_2);
  8000f72:	2104      	movs	r1, #4
- 8000f74:	48bd      	ldr	r0, [pc, #756]	; (800126c <main+0x33c>)
+ 8000f74:	48bf      	ldr	r0, [pc, #764]	; (8001274 <main+0x344>)
  8000f76:	f001 fe27 	bl	8002bc8 <HAL_TIM_PWM_Start>
 //		}
 
 
 
 		//Add LPF?
-		if (micros() - Timestamp_Encoder >= 100)
+		if (micros() - Timestamp_Encoder >= 1000)
  8000f7a:	f000 fc3b 	bl	80017f4 <micros>
  8000f7e:	460a      	mov	r2, r1
  8000f80:	4601      	mov	r1, r0
- 8000f82:	4bbb      	ldr	r3, [pc, #748]	; (8001270 <main+0x340>)
+ 8000f82:	4bbd      	ldr	r3, [pc, #756]	; (8001278 <main+0x348>)
  8000f84:	e9d3 bc00 	ldrd	fp, ip, [r3]
  8000f88:	460b      	mov	r3, r1
  8000f8a:	4614      	mov	r4, r2
  8000f8c:	ebb3 030b 	subs.w	r3, r3, fp
  8000f90:	eb64 040c 	sbc.w	r4, r4, ip
- 8000f94:	2c00      	cmp	r4, #0
- 8000f96:	bf08      	it	eq
- 8000f98:	2b64      	cmpeq	r3, #100	; 0x64
- 8000f9a:	d3ee      	bcc.n	8000f7a <main+0x4a>
+ 8000f94:	f240 31e7 	movw	r1, #999	; 0x3e7
+ 8000f98:	f04f 0200 	mov.w	r2, #0
+ 8000f9c:	42a2      	cmp	r2, r4
+ 8000f9e:	bf08      	it	eq
+ 8000fa0:	4299      	cmpeq	r1, r3
+ 8000fa2:	d2ea      	bcs.n	8000f7a <main+0x4a>
 		{
-			//RPM_output =  EncoderVel;
-			//RPM_input = RPM_set*3072.0/60.0;
+
+			Timestamp_Encoder = micros();
+ 8000fa4:	f000 fc26 	bl	80017f4 <micros>
+ 8000fa8:	4603      	mov	r3, r0
+ 8000faa:	460c      	mov	r4, r1
+ 8000fac:	4ab2      	ldr	r2, [pc, #712]	; (8001278 <main+0x348>)
+ 8000fae:	e9c2 3400 	strd	r3, r4, [r2]
+			EncoderVel = (EncoderVel * 19 + EncoderVelocity_Update()) / 20.0;
+ 8000fb2:	4bb2      	ldr	r3, [pc, #712]	; (800127c <main+0x34c>)
+ 8000fb4:	edd3 7a00 	vldr	s15, [r3]
+ 8000fb8:	eeb3 7a03 	vmov.f32	s14, #51	; 0x41980000  19.0
+ 8000fbc:	ee27 8a87 	vmul.f32	s16, s15, s14
+ 8000fc0:	f000 fba2 	bl	8001708 <EncoderVelocity_Update>
+ 8000fc4:	eef0 7a40 	vmov.f32	s15, s0
+ 8000fc8:	ee38 7a27 	vadd.f32	s14, s16, s15
+ 8000fcc:	eef3 6a04 	vmov.f32	s13, #52	; 0x41a00000  20.0
+ 8000fd0:	eec7 7a26 	vdiv.f32	s15, s14, s13
+ 8000fd4:	4ba9      	ldr	r3, [pc, #676]	; (800127c <main+0x34c>)
+ 8000fd6:	edc3 7a00 	vstr	s15, [r3]
+			rpm = (EncoderVel*60.0)/3072.0;
+ 8000fda:	4ba8      	ldr	r3, [pc, #672]	; (800127c <main+0x34c>)
+ 8000fdc:	681b      	ldr	r3, [r3, #0]
+ 8000fde:	4618      	mov	r0, r3
+ 8000fe0:	f7ff fa5e 	bl	80004a0 <__aeabi_f2d>
+ 8000fe4:	f04f 0200 	mov.w	r2, #0
+ 8000fe8:	4ba5      	ldr	r3, [pc, #660]	; (8001280 <main+0x350>)
+ 8000fea:	f7ff fab1 	bl	8000550 <__aeabi_dmul>
+ 8000fee:	4603      	mov	r3, r0
+ 8000ff0:	460c      	mov	r4, r1
+ 8000ff2:	4618      	mov	r0, r3
+ 8000ff4:	4621      	mov	r1, r4
+ 8000ff6:	f04f 0200 	mov.w	r2, #0
+ 8000ffa:	4ba2      	ldr	r3, [pc, #648]	; (8001284 <main+0x354>)
+ 8000ffc:	f7ff fbd2 	bl	80007a4 <__aeabi_ddiv>
+ 8001000:	4603      	mov	r3, r0
+ 8001002:	460c      	mov	r4, r1
+ 8001004:	4618      	mov	r0, r3
+ 8001006:	4621      	mov	r1, r4
+ 8001008:	f7ff fcb4 	bl	8000974 <__aeabi_d2f>
+ 800100c:	4602      	mov	r2, r0
+ 800100e:	4b9e      	ldr	r3, [pc, #632]	; (8001288 <main+0x358>)
+ 8001010:	601a      	str	r2, [r3, #0]
+
 
 			if(RPM_set == 0)
- 8000f9c:	4bb5      	ldr	r3, [pc, #724]	; (8001274 <main+0x344>)
- 8000f9e:	edd3 7a00 	vldr	s15, [r3]
- 8000fa2:	eef5 7a40 	vcmp.f32	s15, #0.0
- 8000fa6:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
- 8000faa:	d108      	bne.n	8000fbe <main+0x8e>
+ 8001012:	4b9e      	ldr	r3, [pc, #632]	; (800128c <main+0x35c>)
+ 8001014:	edd3 7a00 	vldr	s15, [r3]
+ 8001018:	eef5 7a40 	vcmp.f32	s15, #0.0
+ 800101c:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+ 8001020:	d108      	bne.n	8001034 <main+0x104>
 			{
 				__HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_1, 1);
- 8000fac:	4baf      	ldr	r3, [pc, #700]	; (800126c <main+0x33c>)
- 8000fae:	681b      	ldr	r3, [r3, #0]
- 8000fb0:	2201      	movs	r2, #1
- 8000fb2:	635a      	str	r2, [r3, #52]	; 0x34
+ 8001022:	4b94      	ldr	r3, [pc, #592]	; (8001274 <main+0x344>)
+ 8001024:	681b      	ldr	r3, [r3, #0]
+ 8001026:	2201      	movs	r2, #1
+ 8001028:	635a      	str	r2, [r3, #52]	; 0x34
 				__HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_2, 1);
- 8000fb4:	4bad      	ldr	r3, [pc, #692]	; (800126c <main+0x33c>)
- 8000fb6:	681b      	ldr	r3, [r3, #0]
- 8000fb8:	2201      	movs	r2, #1
- 8000fba:	639a      	str	r2, [r3, #56]	; 0x38
- 8000fbc:	e119      	b.n	80011f2 <main+0x2c2>
+ 800102a:	4b92      	ldr	r3, [pc, #584]	; (8001274 <main+0x344>)
+ 800102c:	681b      	ldr	r3, [r3, #0]
+ 800102e:	2201      	movs	r2, #1
+ 8001030:	639a      	str	r2, [r3, #56]	; 0x38
+ 8001032:	e7a2      	b.n	8000f7a <main+0x4a>
 			}
 
 			else if(RPM_set > 0)
- 8000fbe:	4bad      	ldr	r3, [pc, #692]	; (8001274 <main+0x344>)
- 8000fc0:	edd3 7a00 	vldr	s15, [r3]
- 8000fc4:	eef5 7ac0 	vcmpe.f32	s15, #0.0
- 8000fc8:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
- 8000fcc:	f340 8084 	ble.w	80010d8 <main+0x1a8>
+ 8001034:	4b95      	ldr	r3, [pc, #596]	; (800128c <main+0x35c>)
+ 8001036:	edd3 7a00 	vldr	s15, [r3]
+ 800103a:	eef5 7ac0 	vcmpe.f32	s15, #0.0
+ 800103e:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+ 8001042:	f340 8084 	ble.w	800114e <main+0x21e>
 			{
 				direction = 1;
- 8000fd0:	4ba9      	ldr	r3, [pc, #676]	; (8001278 <main+0x348>)
- 8000fd2:	2201      	movs	r2, #1
- 8000fd4:	601a      	str	r2, [r3, #0]
+ 8001046:	4b92      	ldr	r3, [pc, #584]	; (8001290 <main+0x360>)
+ 8001048:	2201      	movs	r2, #1
+ 800104a:	601a      	str	r2, [r3, #0]
 				RPM_input = direction*RPM_set*3072.0/60.0;
- 8000fd6:	4ba8      	ldr	r3, [pc, #672]	; (8001278 <main+0x348>)
- 8000fd8:	681b      	ldr	r3, [r3, #0]
- 8000fda:	ee07 3a90 	vmov	s15, r3
- 8000fde:	eeb8 7ae7 	vcvt.f32.s32	s14, s15
- 8000fe2:	4ba4      	ldr	r3, [pc, #656]	; (8001274 <main+0x344>)
- 8000fe4:	edd3 7a00 	vldr	s15, [r3]
- 8000fe8:	ee67 7a27 	vmul.f32	s15, s14, s15
- 8000fec:	ee17 0a90 	vmov	r0, s15
- 8000ff0:	f7ff fa56 	bl	80004a0 <__aeabi_f2d>
- 8000ff4:	f04f 0200 	mov.w	r2, #0
- 8000ff8:	4ba0      	ldr	r3, [pc, #640]	; (800127c <main+0x34c>)
- 8000ffa:	f7ff faa9 	bl	8000550 <__aeabi_dmul>
- 8000ffe:	4603      	mov	r3, r0
- 8001000:	460c      	mov	r4, r1
- 8001002:	4618      	mov	r0, r3
- 8001004:	4621      	mov	r1, r4
- 8001006:	f04f 0200 	mov.w	r2, #0
- 800100a:	4b9d      	ldr	r3, [pc, #628]	; (8001280 <main+0x350>)
- 800100c:	f7ff fbca 	bl	80007a4 <__aeabi_ddiv>
- 8001010:	4603      	mov	r3, r0
- 8001012:	460c      	mov	r4, r1
- 8001014:	4618      	mov	r0, r3
- 8001016:	4621      	mov	r1, r4
- 8001018:	f7ff fcac 	bl	8000974 <__aeabi_d2f>
- 800101c:	4602      	mov	r2, r0
- 800101e:	4b99      	ldr	r3, [pc, #612]	; (8001284 <main+0x354>)
- 8001020:	601a      	str	r2, [r3, #0]
+ 800104c:	4b90      	ldr	r3, [pc, #576]	; (8001290 <main+0x360>)
+ 800104e:	681b      	ldr	r3, [r3, #0]
+ 8001050:	ee07 3a90 	vmov	s15, r3
+ 8001054:	eeb8 7ae7 	vcvt.f32.s32	s14, s15
+ 8001058:	4b8c      	ldr	r3, [pc, #560]	; (800128c <main+0x35c>)
+ 800105a:	edd3 7a00 	vldr	s15, [r3]
+ 800105e:	ee67 7a27 	vmul.f32	s15, s14, s15
+ 8001062:	ee17 0a90 	vmov	r0, s15
+ 8001066:	f7ff fa1b 	bl	80004a0 <__aeabi_f2d>
+ 800106a:	f04f 0200 	mov.w	r2, #0
+ 800106e:	4b85      	ldr	r3, [pc, #532]	; (8001284 <main+0x354>)
+ 8001070:	f7ff fa6e 	bl	8000550 <__aeabi_dmul>
+ 8001074:	4603      	mov	r3, r0
+ 8001076:	460c      	mov	r4, r1
+ 8001078:	4618      	mov	r0, r3
+ 800107a:	4621      	mov	r1, r4
+ 800107c:	f04f 0200 	mov.w	r2, #0
+ 8001080:	4b7f      	ldr	r3, [pc, #508]	; (8001280 <main+0x350>)
+ 8001082:	f7ff fb8f 	bl	80007a4 <__aeabi_ddiv>
+ 8001086:	4603      	mov	r3, r0
+ 8001088:	460c      	mov	r4, r1
+ 800108a:	4618      	mov	r0, r3
+ 800108c:	4621      	mov	r1, r4
+ 800108e:	f7ff fc71 	bl	8000974 <__aeabi_d2f>
+ 8001092:	4602      	mov	r2, r0
+ 8001094:	4b7f      	ldr	r3, [pc, #508]	; (8001294 <main+0x364>)
+ 8001096:	601a      	str	r2, [r3, #0]
 				RPM_output =  direction*EncoderVel;
- 8001022:	4b95      	ldr	r3, [pc, #596]	; (8001278 <main+0x348>)
- 8001024:	681b      	ldr	r3, [r3, #0]
- 8001026:	ee07 3a90 	vmov	s15, r3
- 800102a:	eeb8 7ae7 	vcvt.f32.s32	s14, s15
- 800102e:	4b96      	ldr	r3, [pc, #600]	; (8001288 <main+0x358>)
- 8001030:	edd3 7a00 	vldr	s15, [r3]
- 8001034:	ee67 7a27 	vmul.f32	s15, s14, s15
- 8001038:	4b94      	ldr	r3, [pc, #592]	; (800128c <main+0x35c>)
- 800103a:	edc3 7a00 	vstr	s15, [r3]
-				//K_P = 400; K_I = 0.1; K_D = 10;
+ 8001098:	4b7d      	ldr	r3, [pc, #500]	; (8001290 <main+0x360>)
+ 800109a:	681b      	ldr	r3, [r3, #0]
+ 800109c:	ee07 3a90 	vmov	s15, r3
+ 80010a0:	eeb8 7ae7 	vcvt.f32.s32	s14, s15
+ 80010a4:	4b75      	ldr	r3, [pc, #468]	; (800127c <main+0x34c>)
+ 80010a6:	edd3 7a00 	vldr	s15, [r3]
+ 80010aa:	ee67 7a27 	vmul.f32	s15, s14, s15
+ 80010ae:	4b7a      	ldr	r3, [pc, #488]	; (8001298 <main+0x368>)
+ 80010b0:	edc3 7a00 	vstr	s15, [r3]
+				//K_P = 2; K_I = 0.002; K_D = 8;
 				Now_error = RPM_input - RPM_output;
- 800103e:	4b91      	ldr	r3, [pc, #580]	; (8001284 <main+0x354>)
- 8001040:	ed93 7a00 	vldr	s14, [r3]
- 8001044:	4b91      	ldr	r3, [pc, #580]	; (800128c <main+0x35c>)
- 8001046:	edd3 7a00 	vldr	s15, [r3]
- 800104a:	ee77 7a67 	vsub.f32	s15, s14, s15
- 800104e:	4b90      	ldr	r3, [pc, #576]	; (8001290 <main+0x360>)
- 8001050:	edc3 7a00 	vstr	s15, [r3]
+ 80010b4:	4b77      	ldr	r3, [pc, #476]	; (8001294 <main+0x364>)
+ 80010b6:	ed93 7a00 	vldr	s14, [r3]
+ 80010ba:	4b77      	ldr	r3, [pc, #476]	; (8001298 <main+0x368>)
+ 80010bc:	edd3 7a00 	vldr	s15, [r3]
+ 80010c0:	ee77 7a67 	vsub.f32	s15, s14, s15
+ 80010c4:	4b75      	ldr	r3, [pc, #468]	; (800129c <main+0x36c>)
+ 80010c6:	edc3 7a00 	vstr	s15, [r3]
 				Sum_error += Now_error;
- 8001054:	4b8f      	ldr	r3, [pc, #572]	; (8001294 <main+0x364>)
- 8001056:	ed93 7a00 	vldr	s14, [r3]
- 800105a:	4b8d      	ldr	r3, [pc, #564]	; (8001290 <main+0x360>)
- 800105c:	edd3 7a00 	vldr	s15, [r3]
- 8001060:	ee77 7a27 	vadd.f32	s15, s14, s15
- 8001064:	4b8b      	ldr	r3, [pc, #556]	; (8001294 <main+0x364>)
- 8001066:	edc3 7a00 	vstr	s15, [r3]
+ 80010ca:	4b75      	ldr	r3, [pc, #468]	; (80012a0 <main+0x370>)
+ 80010cc:	ed93 7a00 	vldr	s14, [r3]
+ 80010d0:	4b72      	ldr	r3, [pc, #456]	; (800129c <main+0x36c>)
+ 80010d2:	edd3 7a00 	vldr	s15, [r3]
+ 80010d6:	ee77 7a27 	vadd.f32	s15, s14, s15
+ 80010da:	4b71      	ldr	r3, [pc, #452]	; (80012a0 <main+0x370>)
+ 80010dc:	edc3 7a00 	vstr	s15, [r3]
 				PWMOut = (K_P*Now_error) + (K_I*Sum_error) + (K_D*(Now_error - Pre_error));
- 800106a:	4b8b      	ldr	r3, [pc, #556]	; (8001298 <main+0x368>)
- 800106c:	ed93 7a00 	vldr	s14, [r3]
- 8001070:	4b87      	ldr	r3, [pc, #540]	; (8001290 <main+0x360>)
- 8001072:	edd3 7a00 	vldr	s15, [r3]
- 8001076:	ee27 7a27 	vmul.f32	s14, s14, s15
- 800107a:	4b88      	ldr	r3, [pc, #544]	; (800129c <main+0x36c>)
- 800107c:	edd3 6a00 	vldr	s13, [r3]
- 8001080:	4b84      	ldr	r3, [pc, #528]	; (8001294 <main+0x364>)
- 8001082:	edd3 7a00 	vldr	s15, [r3]
- 8001086:	ee66 7aa7 	vmul.f32	s15, s13, s15
- 800108a:	ee37 7a27 	vadd.f32	s14, s14, s15
- 800108e:	4b80      	ldr	r3, [pc, #512]	; (8001290 <main+0x360>)
- 8001090:	edd3 6a00 	vldr	s13, [r3]
- 8001094:	4b82      	ldr	r3, [pc, #520]	; (80012a0 <main+0x370>)
- 8001096:	edd3 7a00 	vldr	s15, [r3]
- 800109a:	ee76 6ae7 	vsub.f32	s13, s13, s15
- 800109e:	4b81      	ldr	r3, [pc, #516]	; (80012a4 <main+0x374>)
- 80010a0:	edd3 7a00 	vldr	s15, [r3]
- 80010a4:	ee66 7aa7 	vmul.f32	s15, s13, s15
- 80010a8:	ee77 7a27 	vadd.f32	s15, s14, s15
- 80010ac:	4b7e      	ldr	r3, [pc, #504]	; (80012a8 <main+0x378>)
- 80010ae:	edc3 7a00 	vstr	s15, [r3]
+ 80010e0:	4b70      	ldr	r3, [pc, #448]	; (80012a4 <main+0x374>)
+ 80010e2:	ed93 7a00 	vldr	s14, [r3]
+ 80010e6:	4b6d      	ldr	r3, [pc, #436]	; (800129c <main+0x36c>)
+ 80010e8:	edd3 7a00 	vldr	s15, [r3]
+ 80010ec:	ee27 7a27 	vmul.f32	s14, s14, s15
+ 80010f0:	4b6d      	ldr	r3, [pc, #436]	; (80012a8 <main+0x378>)
+ 80010f2:	edd3 6a00 	vldr	s13, [r3]
+ 80010f6:	4b6a      	ldr	r3, [pc, #424]	; (80012a0 <main+0x370>)
+ 80010f8:	edd3 7a00 	vldr	s15, [r3]
+ 80010fc:	ee66 7aa7 	vmul.f32	s15, s13, s15
+ 8001100:	ee37 7a27 	vadd.f32	s14, s14, s15
+ 8001104:	4b65      	ldr	r3, [pc, #404]	; (800129c <main+0x36c>)
+ 8001106:	edd3 6a00 	vldr	s13, [r3]
+ 800110a:	4b68      	ldr	r3, [pc, #416]	; (80012ac <main+0x37c>)
+ 800110c:	edd3 7a00 	vldr	s15, [r3]
+ 8001110:	ee76 6ae7 	vsub.f32	s13, s13, s15
+ 8001114:	4b66      	ldr	r3, [pc, #408]	; (80012b0 <main+0x380>)
+ 8001116:	edd3 7a00 	vldr	s15, [r3]
+ 800111a:	ee66 7aa7 	vmul.f32	s15, s13, s15
+ 800111e:	ee77 7a27 	vadd.f32	s15, s14, s15
+ 8001122:	4b64      	ldr	r3, [pc, #400]	; (80012b4 <main+0x384>)
+ 8001124:	edc3 7a00 	vstr	s15, [r3]
 				Pre_error = Now_error;
- 80010b2:	4b77      	ldr	r3, [pc, #476]	; (8001290 <main+0x360>)
- 80010b4:	681b      	ldr	r3, [r3, #0]
- 80010b6:	4a7a      	ldr	r2, [pc, #488]	; (80012a0 <main+0x370>)
- 80010b8:	6013      	str	r3, [r2, #0]
+ 8001128:	4b5c      	ldr	r3, [pc, #368]	; (800129c <main+0x36c>)
+ 800112a:	681b      	ldr	r3, [r3, #0]
+ 800112c:	4a5f      	ldr	r2, [pc, #380]	; (80012ac <main+0x37c>)
+ 800112e:	6013      	str	r3, [r2, #0]
 
 				__HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_1, PWMOut);
- 80010ba:	4b7b      	ldr	r3, [pc, #492]	; (80012a8 <main+0x378>)
- 80010bc:	edd3 7a00 	vldr	s15, [r3]
- 80010c0:	4b6a      	ldr	r3, [pc, #424]	; (800126c <main+0x33c>)
- 80010c2:	681b      	ldr	r3, [r3, #0]
- 80010c4:	eefc 7ae7 	vcvt.u32.f32	s15, s15
- 80010c8:	ee17 2a90 	vmov	r2, s15
- 80010cc:	635a      	str	r2, [r3, #52]	; 0x34
+ 8001130:	4b60      	ldr	r3, [pc, #384]	; (80012b4 <main+0x384>)
+ 8001132:	edd3 7a00 	vldr	s15, [r3]
+ 8001136:	4b4f      	ldr	r3, [pc, #316]	; (8001274 <main+0x344>)
+ 8001138:	681b      	ldr	r3, [r3, #0]
+ 800113a:	eefc 7ae7 	vcvt.u32.f32	s15, s15
+ 800113e:	ee17 2a90 	vmov	r2, s15
+ 8001142:	635a      	str	r2, [r3, #52]	; 0x34
 				__HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_2, 0);
- 80010ce:	4b67      	ldr	r3, [pc, #412]	; (800126c <main+0x33c>)
- 80010d0:	681b      	ldr	r3, [r3, #0]
- 80010d2:	2200      	movs	r2, #0
- 80010d4:	639a      	str	r2, [r3, #56]	; 0x38
- 80010d6:	e08c      	b.n	80011f2 <main+0x2c2>
+ 8001144:	4b4b      	ldr	r3, [pc, #300]	; (8001274 <main+0x344>)
+ 8001146:	681b      	ldr	r3, [r3, #0]
+ 8001148:	2200      	movs	r2, #0
+ 800114a:	639a      	str	r2, [r3, #56]	; 0x38
+ 800114c:	e715      	b.n	8000f7a <main+0x4a>
 
 			}
 
 			else if(RPM_set < 0)
- 80010d8:	4b66      	ldr	r3, [pc, #408]	; (8001274 <main+0x344>)
- 80010da:	edd3 7a00 	vldr	s15, [r3]
- 80010de:	eef5 7ac0 	vcmpe.f32	s15, #0.0
- 80010e2:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
- 80010e6:	f140 8084 	bpl.w	80011f2 <main+0x2c2>
+ 800114e:	4b4f      	ldr	r3, [pc, #316]	; (800128c <main+0x35c>)
+ 8001150:	edd3 7a00 	vldr	s15, [r3]
+ 8001154:	eef5 7ac0 	vcmpe.f32	s15, #0.0
+ 8001158:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+ 800115c:	f140 8084 	bpl.w	8001268 <main+0x338>
 			{
 				direction = -1;
- 80010ea:	4b63      	ldr	r3, [pc, #396]	; (8001278 <main+0x348>)
- 80010ec:	f04f 32ff 	mov.w	r2, #4294967295
- 80010f0:	601a      	str	r2, [r3, #0]
+ 8001160:	4b4b      	ldr	r3, [pc, #300]	; (8001290 <main+0x360>)
+ 8001162:	f04f 32ff 	mov.w	r2, #4294967295
+ 8001166:	601a      	str	r2, [r3, #0]
 				RPM_input = direction*RPM_set*3072.0/60.0;
- 80010f2:	4b61      	ldr	r3, [pc, #388]	; (8001278 <main+0x348>)
- 80010f4:	681b      	ldr	r3, [r3, #0]
- 80010f6:	ee07 3a90 	vmov	s15, r3
- 80010fa:	eeb8 7ae7 	vcvt.f32.s32	s14, s15
- 80010fe:	4b5d      	ldr	r3, [pc, #372]	; (8001274 <main+0x344>)
- 8001100:	edd3 7a00 	vldr	s15, [r3]
- 8001104:	ee67 7a27 	vmul.f32	s15, s14, s15
- 8001108:	ee17 0a90 	vmov	r0, s15
- 800110c:	f7ff f9c8 	bl	80004a0 <__aeabi_f2d>
- 8001110:	f04f 0200 	mov.w	r2, #0
- 8001114:	4b59      	ldr	r3, [pc, #356]	; (800127c <main+0x34c>)
- 8001116:	f7ff fa1b 	bl	8000550 <__aeabi_dmul>
- 800111a:	4603      	mov	r3, r0
- 800111c:	460c      	mov	r4, r1
- 800111e:	4618      	mov	r0, r3
- 8001120:	4621      	mov	r1, r4
- 8001122:	f04f 0200 	mov.w	r2, #0
- 8001126:	4b56      	ldr	r3, [pc, #344]	; (8001280 <main+0x350>)
- 8001128:	f7ff fb3c 	bl	80007a4 <__aeabi_ddiv>
- 800112c:	4603      	mov	r3, r0
- 800112e:	460c      	mov	r4, r1
- 8001130:	4618      	mov	r0, r3
- 8001132:	4621      	mov	r1, r4
- 8001134:	f7ff fc1e 	bl	8000974 <__aeabi_d2f>
- 8001138:	4602      	mov	r2, r0
- 800113a:	4b52      	ldr	r3, [pc, #328]	; (8001284 <main+0x354>)
- 800113c:	601a      	str	r2, [r3, #0]
+ 8001168:	4b49      	ldr	r3, [pc, #292]	; (8001290 <main+0x360>)
+ 800116a:	681b      	ldr	r3, [r3, #0]
+ 800116c:	ee07 3a90 	vmov	s15, r3
+ 8001170:	eeb8 7ae7 	vcvt.f32.s32	s14, s15
+ 8001174:	4b45      	ldr	r3, [pc, #276]	; (800128c <main+0x35c>)
+ 8001176:	edd3 7a00 	vldr	s15, [r3]
+ 800117a:	ee67 7a27 	vmul.f32	s15, s14, s15
+ 800117e:	ee17 0a90 	vmov	r0, s15
+ 8001182:	f7ff f98d 	bl	80004a0 <__aeabi_f2d>
+ 8001186:	f04f 0200 	mov.w	r2, #0
+ 800118a:	4b3e      	ldr	r3, [pc, #248]	; (8001284 <main+0x354>)
+ 800118c:	f7ff f9e0 	bl	8000550 <__aeabi_dmul>
+ 8001190:	4603      	mov	r3, r0
+ 8001192:	460c      	mov	r4, r1
+ 8001194:	4618      	mov	r0, r3
+ 8001196:	4621      	mov	r1, r4
+ 8001198:	f04f 0200 	mov.w	r2, #0
+ 800119c:	4b38      	ldr	r3, [pc, #224]	; (8001280 <main+0x350>)
+ 800119e:	f7ff fb01 	bl	80007a4 <__aeabi_ddiv>
+ 80011a2:	4603      	mov	r3, r0
+ 80011a4:	460c      	mov	r4, r1
+ 80011a6:	4618      	mov	r0, r3
+ 80011a8:	4621      	mov	r1, r4
+ 80011aa:	f7ff fbe3 	bl	8000974 <__aeabi_d2f>
+ 80011ae:	4602      	mov	r2, r0
+ 80011b0:	4b38      	ldr	r3, [pc, #224]	; (8001294 <main+0x364>)
+ 80011b2:	601a      	str	r2, [r3, #0]
 				RPM_output =  direction*EncoderVel;
- 800113e:	4b4e      	ldr	r3, [pc, #312]	; (8001278 <main+0x348>)
- 8001140:	681b      	ldr	r3, [r3, #0]
- 8001142:	ee07 3a90 	vmov	s15, r3
- 8001146:	eeb8 7ae7 	vcvt.f32.s32	s14, s15
- 800114a:	4b4f      	ldr	r3, [pc, #316]	; (8001288 <main+0x358>)
- 800114c:	edd3 7a00 	vldr	s15, [r3]
- 8001150:	ee67 7a27 	vmul.f32	s15, s14, s15
- 8001154:	4b4d      	ldr	r3, [pc, #308]	; (800128c <main+0x35c>)
- 8001156:	edc3 7a00 	vstr	s15, [r3]
-				//K_P = 400; K_I = 0.1; K_D = 10;
+ 80011b4:	4b36      	ldr	r3, [pc, #216]	; (8001290 <main+0x360>)
+ 80011b6:	681b      	ldr	r3, [r3, #0]
+ 80011b8:	ee07 3a90 	vmov	s15, r3
+ 80011bc:	eeb8 7ae7 	vcvt.f32.s32	s14, s15
+ 80011c0:	4b2e      	ldr	r3, [pc, #184]	; (800127c <main+0x34c>)
+ 80011c2:	edd3 7a00 	vldr	s15, [r3]
+ 80011c6:	ee67 7a27 	vmul.f32	s15, s14, s15
+ 80011ca:	4b33      	ldr	r3, [pc, #204]	; (8001298 <main+0x368>)
+ 80011cc:	edc3 7a00 	vstr	s15, [r3]
+				//K_P = 2; K_I = 0.002; K_D = 8;
 				Now_error = RPM_input - RPM_output;
- 800115a:	4b4a      	ldr	r3, [pc, #296]	; (8001284 <main+0x354>)
- 800115c:	ed93 7a00 	vldr	s14, [r3]
- 8001160:	4b4a      	ldr	r3, [pc, #296]	; (800128c <main+0x35c>)
- 8001162:	edd3 7a00 	vldr	s15, [r3]
- 8001166:	ee77 7a67 	vsub.f32	s15, s14, s15
- 800116a:	4b49      	ldr	r3, [pc, #292]	; (8001290 <main+0x360>)
- 800116c:	edc3 7a00 	vstr	s15, [r3]
+ 80011d0:	4b30      	ldr	r3, [pc, #192]	; (8001294 <main+0x364>)
+ 80011d2:	ed93 7a00 	vldr	s14, [r3]
+ 80011d6:	4b30      	ldr	r3, [pc, #192]	; (8001298 <main+0x368>)
+ 80011d8:	edd3 7a00 	vldr	s15, [r3]
+ 80011dc:	ee77 7a67 	vsub.f32	s15, s14, s15
+ 80011e0:	4b2e      	ldr	r3, [pc, #184]	; (800129c <main+0x36c>)
+ 80011e2:	edc3 7a00 	vstr	s15, [r3]
 				Sum_error += Now_error;
- 8001170:	4b48      	ldr	r3, [pc, #288]	; (8001294 <main+0x364>)
- 8001172:	ed93 7a00 	vldr	s14, [r3]
- 8001176:	4b46      	ldr	r3, [pc, #280]	; (8001290 <main+0x360>)
- 8001178:	edd3 7a00 	vldr	s15, [r3]
- 800117c:	ee77 7a27 	vadd.f32	s15, s14, s15
- 8001180:	4b44      	ldr	r3, [pc, #272]	; (8001294 <main+0x364>)
- 8001182:	edc3 7a00 	vstr	s15, [r3]
+ 80011e6:	4b2e      	ldr	r3, [pc, #184]	; (80012a0 <main+0x370>)
+ 80011e8:	ed93 7a00 	vldr	s14, [r3]
+ 80011ec:	4b2b      	ldr	r3, [pc, #172]	; (800129c <main+0x36c>)
+ 80011ee:	edd3 7a00 	vldr	s15, [r3]
+ 80011f2:	ee77 7a27 	vadd.f32	s15, s14, s15
+ 80011f6:	4b2a      	ldr	r3, [pc, #168]	; (80012a0 <main+0x370>)
+ 80011f8:	edc3 7a00 	vstr	s15, [r3]
 				PWMOut = (K_P*Now_error) + (K_I*Sum_error) + (K_D*(Now_error - Pre_error));
- 8001186:	4b44      	ldr	r3, [pc, #272]	; (8001298 <main+0x368>)
- 8001188:	ed93 7a00 	vldr	s14, [r3]
- 800118c:	4b40      	ldr	r3, [pc, #256]	; (8001290 <main+0x360>)
- 800118e:	edd3 7a00 	vldr	s15, [r3]
- 8001192:	ee27 7a27 	vmul.f32	s14, s14, s15
- 8001196:	4b41      	ldr	r3, [pc, #260]	; (800129c <main+0x36c>)
- 8001198:	edd3 6a00 	vldr	s13, [r3]
- 800119c:	4b3d      	ldr	r3, [pc, #244]	; (8001294 <main+0x364>)
- 800119e:	edd3 7a00 	vldr	s15, [r3]
- 80011a2:	ee66 7aa7 	vmul.f32	s15, s13, s15
- 80011a6:	ee37 7a27 	vadd.f32	s14, s14, s15
- 80011aa:	4b39      	ldr	r3, [pc, #228]	; (8001290 <main+0x360>)
- 80011ac:	edd3 6a00 	vldr	s13, [r3]
- 80011b0:	4b3b      	ldr	r3, [pc, #236]	; (80012a0 <main+0x370>)
- 80011b2:	edd3 7a00 	vldr	s15, [r3]
- 80011b6:	ee76 6ae7 	vsub.f32	s13, s13, s15
- 80011ba:	4b3a      	ldr	r3, [pc, #232]	; (80012a4 <main+0x374>)
- 80011bc:	edd3 7a00 	vldr	s15, [r3]
- 80011c0:	ee66 7aa7 	vmul.f32	s15, s13, s15
- 80011c4:	ee77 7a27 	vadd.f32	s15, s14, s15
- 80011c8:	4b37      	ldr	r3, [pc, #220]	; (80012a8 <main+0x378>)
- 80011ca:	edc3 7a00 	vstr	s15, [r3]
+ 80011fc:	4b29      	ldr	r3, [pc, #164]	; (80012a4 <main+0x374>)
+ 80011fe:	ed93 7a00 	vldr	s14, [r3]
+ 8001202:	4b26      	ldr	r3, [pc, #152]	; (800129c <main+0x36c>)
+ 8001204:	edd3 7a00 	vldr	s15, [r3]
+ 8001208:	ee27 7a27 	vmul.f32	s14, s14, s15
+ 800120c:	4b26      	ldr	r3, [pc, #152]	; (80012a8 <main+0x378>)
+ 800120e:	edd3 6a00 	vldr	s13, [r3]
+ 8001212:	4b23      	ldr	r3, [pc, #140]	; (80012a0 <main+0x370>)
+ 8001214:	edd3 7a00 	vldr	s15, [r3]
+ 8001218:	ee66 7aa7 	vmul.f32	s15, s13, s15
+ 800121c:	ee37 7a27 	vadd.f32	s14, s14, s15
+ 8001220:	4b1e      	ldr	r3, [pc, #120]	; (800129c <main+0x36c>)
+ 8001222:	edd3 6a00 	vldr	s13, [r3]
+ 8001226:	4b21      	ldr	r3, [pc, #132]	; (80012ac <main+0x37c>)
+ 8001228:	edd3 7a00 	vldr	s15, [r3]
+ 800122c:	ee76 6ae7 	vsub.f32	s13, s13, s15
+ 8001230:	4b1f      	ldr	r3, [pc, #124]	; (80012b0 <main+0x380>)
+ 8001232:	edd3 7a00 	vldr	s15, [r3]
+ 8001236:	ee66 7aa7 	vmul.f32	s15, s13, s15
+ 800123a:	ee77 7a27 	vadd.f32	s15, s14, s15
+ 800123e:	4b1d      	ldr	r3, [pc, #116]	; (80012b4 <main+0x384>)
+ 8001240:	edc3 7a00 	vstr	s15, [r3]
 				Pre_error = Now_error;
- 80011ce:	4b30      	ldr	r3, [pc, #192]	; (8001290 <main+0x360>)
- 80011d0:	681b      	ldr	r3, [r3, #0]
- 80011d2:	4a33      	ldr	r2, [pc, #204]	; (80012a0 <main+0x370>)
- 80011d4:	6013      	str	r3, [r2, #0]
+ 8001244:	4b15      	ldr	r3, [pc, #84]	; (800129c <main+0x36c>)
+ 8001246:	681b      	ldr	r3, [r3, #0]
+ 8001248:	4a18      	ldr	r2, [pc, #96]	; (80012ac <main+0x37c>)
+ 800124a:	6013      	str	r3, [r2, #0]
 
 				__HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_1, 0);
- 80011d6:	4b25      	ldr	r3, [pc, #148]	; (800126c <main+0x33c>)
- 80011d8:	681b      	ldr	r3, [r3, #0]
- 80011da:	2200      	movs	r2, #0
- 80011dc:	635a      	str	r2, [r3, #52]	; 0x34
+ 800124c:	4b09      	ldr	r3, [pc, #36]	; (8001274 <main+0x344>)
+ 800124e:	681b      	ldr	r3, [r3, #0]
+ 8001250:	2200      	movs	r2, #0
+ 8001252:	635a      	str	r2, [r3, #52]	; 0x34
 				__HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_2, PWMOut);
- 80011de:	4b32      	ldr	r3, [pc, #200]	; (80012a8 <main+0x378>)
- 80011e0:	edd3 7a00 	vldr	s15, [r3]
- 80011e4:	4b21      	ldr	r3, [pc, #132]	; (800126c <main+0x33c>)
- 80011e6:	681b      	ldr	r3, [r3, #0]
- 80011e8:	eefc 7ae7 	vcvt.u32.f32	s15, s15
- 80011ec:	ee17 2a90 	vmov	r2, s15
- 80011f0:	639a      	str	r2, [r3, #56]	; 0x38
-
-			}
-
-			Timestamp_Encoder = micros();
- 80011f2:	f000 faff 	bl	80017f4 <micros>
- 80011f6:	4603      	mov	r3, r0
- 80011f8:	460c      	mov	r4, r1
- 80011fa:	4a1d      	ldr	r2, [pc, #116]	; (8001270 <main+0x340>)
- 80011fc:	e9c2 3400 	strd	r3, r4, [r2]
-			EncoderVel = (EncoderVel * 999 + EncoderVelocity_Update()) / 1000.0;
- 8001200:	4b21      	ldr	r3, [pc, #132]	; (8001288 <main+0x358>)
- 8001202:	edd3 7a00 	vldr	s15, [r3]
- 8001206:	ed9f 7a29 	vldr	s14, [pc, #164]	; 80012ac <main+0x37c>
- 800120a:	ee27 8a87 	vmul.f32	s16, s15, s14
- 800120e:	f000 fa7b 	bl	8001708 <EncoderVelocity_Update>
- 8001212:	eef0 7a40 	vmov.f32	s15, s0
- 8001216:	ee38 7a27 	vadd.f32	s14, s16, s15
- 800121a:	eddf 6a25 	vldr	s13, [pc, #148]	; 80012b0 <main+0x380>
- 800121e:	eec7 7a26 	vdiv.f32	s15, s14, s13
- 8001222:	4b19      	ldr	r3, [pc, #100]	; (8001288 <main+0x358>)
- 8001224:	edc3 7a00 	vstr	s15, [r3]
-			rpm = (EncoderVel*60.0)/3072.0;
- 8001228:	4b17      	ldr	r3, [pc, #92]	; (8001288 <main+0x358>)
- 800122a:	681b      	ldr	r3, [r3, #0]
- 800122c:	4618      	mov	r0, r3
- 800122e:	f7ff f937 	bl	80004a0 <__aeabi_f2d>
- 8001232:	f04f 0200 	mov.w	r2, #0
- 8001236:	4b12      	ldr	r3, [pc, #72]	; (8001280 <main+0x350>)
- 8001238:	f7ff f98a 	bl	8000550 <__aeabi_dmul>
- 800123c:	4603      	mov	r3, r0
- 800123e:	460c      	mov	r4, r1
- 8001240:	4618      	mov	r0, r3
- 8001242:	4621      	mov	r1, r4
- 8001244:	f04f 0200 	mov.w	r2, #0
- 8001248:	4b0c      	ldr	r3, [pc, #48]	; (800127c <main+0x34c>)
- 800124a:	f7ff faab 	bl	80007a4 <__aeabi_ddiv>
- 800124e:	4603      	mov	r3, r0
- 8001250:	460c      	mov	r4, r1
- 8001252:	4618      	mov	r0, r3
- 8001254:	4621      	mov	r1, r4
- 8001256:	f7ff fb8d 	bl	8000974 <__aeabi_d2f>
- 800125a:	4602      	mov	r2, r0
- 800125c:	4b15      	ldr	r3, [pc, #84]	; (80012b4 <main+0x384>)
- 800125e:	601a      	str	r2, [r3, #0]
-		if (micros() - Timestamp_Encoder >= 100)
- 8001260:	e68b      	b.n	8000f7a <main+0x4a>
- 8001262:	bf00      	nop
- 8001264:	20000104 	.word	0x20000104
- 8001268:	200000c4 	.word	0x200000c4
- 800126c:	20000084 	.word	0x20000084
- 8001270:	20000040 	.word	0x20000040
- 8001274:	20000050 	.word	0x20000050
- 8001278:	20000074 	.word	0x20000074
- 800127c:	40a80000 	.word	0x40a80000
+ 8001254:	4b17      	ldr	r3, [pc, #92]	; (80012b4 <main+0x384>)
+ 8001256:	edd3 7a00 	vldr	s15, [r3]
+ 800125a:	4b06      	ldr	r3, [pc, #24]	; (8001274 <main+0x344>)
+ 800125c:	681b      	ldr	r3, [r3, #0]
+ 800125e:	eefc 7ae7 	vcvt.u32.f32	s15, s15
+ 8001262:	ee17 2a90 	vmov	r2, s15
+ 8001266:	639a      	str	r2, [r3, #56]	; 0x38
+		if (micros() - Timestamp_Encoder >= 1000)
+ 8001268:	e687      	b.n	8000f7a <main+0x4a>
+ 800126a:	bf00      	nop
+ 800126c:	20000104 	.word	0x20000104
+ 8001270:	200000c4 	.word	0x200000c4
+ 8001274:	20000084 	.word	0x20000084
+ 8001278:	20000040 	.word	0x20000040
+ 800127c:	20000038 	.word	0x20000038
  8001280:	404e0000 	.word	0x404e0000
- 8001284:	20000048 	.word	0x20000048
- 8001288:	20000038 	.word	0x20000038
- 800128c:	2000004c 	.word	0x2000004c
- 8001290:	20000064 	.word	0x20000064
- 8001294:	20000068 	.word	0x20000068
- 8001298:	20000058 	.word	0x20000058
- 800129c:	2000005c 	.word	0x2000005c
- 80012a0:	2000006c 	.word	0x2000006c
- 80012a4:	20000060 	.word	0x20000060
- 80012a8:	20000070 	.word	0x20000070
- 80012ac:	4479c000 	.word	0x4479c000
- 80012b0:	447a0000 	.word	0x447a0000
- 80012b4:	20000054 	.word	0x20000054
+ 8001284:	40a80000 	.word	0x40a80000
+ 8001288:	20000054 	.word	0x20000054
+ 800128c:	20000050 	.word	0x20000050
+ 8001290:	20000074 	.word	0x20000074
+ 8001294:	20000048 	.word	0x20000048
+ 8001298:	2000004c 	.word	0x2000004c
+ 800129c:	20000064 	.word	0x20000064
+ 80012a0:	20000068 	.word	0x20000068
+ 80012a4:	20000058 	.word	0x20000058
+ 80012a8:	2000005c 	.word	0x2000005c
+ 80012ac:	2000006c 	.word	0x2000006c
+ 80012b0:	20000060 	.word	0x20000060
+ 80012b4:	20000070 	.word	0x20000070
 
 080012b8 <SystemClock_Config>:
 /**

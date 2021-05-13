@@ -143,10 +143,13 @@ int main(void)
 
 
 		//Add LPF?
-		if (micros() - Timestamp_Encoder >= 100)
+		if (micros() - Timestamp_Encoder >= 1000)
 		{
-			//RPM_output =  EncoderVel;
-			//RPM_input = RPM_set*3072.0/60.0;
+
+			Timestamp_Encoder = micros();
+			EncoderVel = (EncoderVel * 19 + EncoderVelocity_Update()) / 20.0;
+			rpm = (EncoderVel*60.0)/3072.0;
+
 
 			if(RPM_set == 0)
 			{
@@ -159,7 +162,7 @@ int main(void)
 				direction = 1;
 				RPM_input = direction*RPM_set*3072.0/60.0;
 				RPM_output =  direction*EncoderVel;
-				//K_P = 1000; K_I = 0.5; K_D = 100;
+				//K_P = 2; K_I = 0.002; K_D = 8;
 				Now_error = RPM_input - RPM_output;
 				Sum_error += Now_error;
 				PWMOut = (K_P*Now_error) + (K_I*Sum_error) + (K_D*(Now_error - Pre_error));
@@ -175,7 +178,7 @@ int main(void)
 				direction = -1;
 				RPM_input = direction*RPM_set*3072.0/60.0;
 				RPM_output =  direction*EncoderVel;
-				//K_P = 1000; K_I = 0.5; K_D = 100;
+				//K_P = 2; K_I = 0.002; K_D = 8;
 				Now_error = RPM_input - RPM_output;
 				Sum_error += Now_error;
 				PWMOut = (K_P*Now_error) + (K_I*Sum_error) + (K_D*(Now_error - Pre_error));
@@ -186,9 +189,9 @@ int main(void)
 
 			}
 
-			Timestamp_Encoder = micros();
-			EncoderVel = (EncoderVel * 999 + EncoderVelocity_Update()) / 1000.0;
-			rpm = (EncoderVel*60.0)/3072.0;
+//			Timestamp_Encoder = micros();
+//			EncoderVel = (EncoderVel * 19 + EncoderVelocity_Update()) / 20.0;
+//			rpm = (EncoderVel*60.0)/3072.0;
 		}
 
 	}
